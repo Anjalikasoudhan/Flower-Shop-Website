@@ -1,4 +1,4 @@
-# 🌸 Bloom & Blossom | Premium Flower Shop Website
+# Flower_Shop_Website_using_HTML_CSS_JS
 
 A stunningly designed, responsive, and interactive flower shop landing page. Featuring smooth animations, dynamic product sliders, and a functional shopping cart experience.
 
@@ -18,9 +18,8 @@ A stunningly designed, responsive, and interactive flower shop landing page. Fea
 - **Fonts**: Google Fonts
 
 ## 🚀 Quick Start
-1. Clone the repository: `git clone https://github.com/Anjalikasoudhan/Flower-Shop-Website.git`
-2. Open `Flower.html` in your favorite browser.
-3. Enjoy the blooming experience!
+1. Open `index.html` in your favorite browser.
+2. Enjoy the blooming experience!
 
 ---
 Developed with ❤️ by [Anjali Kasoudhan](https://github.com/Anjalikasoudhan)
