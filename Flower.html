@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower Shop</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="Flowercss.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+        /* Theme-consistent Dialog Boxes */
+        #cart-container.active, #user-container.active, #success-dialog.active { right: 2rem; opacity: 1; pointer-events: auto; }
+        
+        #cart-container, #user-container, #success-dialog {
+            position: fixed; top: 9rem; right: -110%;
+            background: rgba(20, 18, 21, 0.95); border: .2rem solid pink;
+            width: 35rem; padding: 2rem; z-index: 1100;
+            transition: .4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.5);
+            opacity: 0; pointer-events: none;
+        }
+
+        #success-dialog { top: 50%; left: 50%; transform: translate(-50%, -50%); right: auto; text-align: center; width: 30rem; }
+        #success-dialog i { font-size: 5rem; color: pink; margin-bottom: 1rem; }
+
+        .input-box-modal {
+            width: 100%; margin: .7rem 0; background: #141215;
+            border: .1rem solid #444; color: #fff; padding: 1.2rem; font-size: 1.5rem;
+        }
+        .input-box-modal:focus { border-color: pink; }
+
+        #cart-items li {
+            list-style: none; color: #fff; font-size: 1.5rem;
+            padding: 1rem 0; border-bottom: 0.1rem solid #333;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        #cart-items li button { background: pink; border-radius: .5rem; padding: .2rem .5rem; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <a href="#" class="logo"><i class="fas fa-seedling"></i>flowers</a>
+        <nav class="navbar">
+            <a href="#home" class="active">Home</a>
+            <a href="#products">Products</a>
+            <a href="#about">About</a>
+            <a href="#arrivals">Arrivals</a>
+            <a href="#contact">contact</a>
+            <a href="#blogs">blogs</a>
+        </nav>
+        <div class="icons">
+            <div id="menu-btn" class="fas fa-bars"></div>
+            <div id="search-btn" class="fas fa-search"></div>
+            <a href="javascript:void(0)" class="fas fa-shopping-cart" id="cart-icon-btn">
+                <span id="cart-count" style="font-size: 1.2rem; background: pink; color: black; border-radius: 50%; padding: 1px 6px; position: absolute; margin: -10px 0 0 -10px;">0</span>
+            </a>
+            <a href="javascript:void(0)" class="fas fa-user" id="user-icon-btn"></a>
+        </div>
+        <form action="" class="search-form">
+            <input type="search" placeholder="Search flowers..." id="input-box">
+            <label for="input-box" class="fas fa-search"></label>
+        </form>
+    </header>
+
+    <div id="success-dialog">
+        <i class="fas fa-check-circle"></i>
+        <h3 style="color:white; font-size: 2.5rem;">Order Placed!</h3>
+        <p style="color:pink; font-size: 1.5rem; margin: 1rem 0;">Your flowers are on the way.</p>
+        <button onclick="closeSuccess()" class="btn">Close</button>
+    </div>
+
+    <div id="user-container">
+        <h3 style="color:pink; font-size:2rem; margin-bottom:1rem;">Your Details</h3>
+        <input type="text" id="u-name" class="input-box-modal" placeholder="Full Name">
+        <input type="text" id="u-phone" class="input-box-modal" placeholder="Phone Number">
+        <textarea id="u-address" class="input-box-modal" placeholder="Address" rows="3"></textarea>
+        <button onclick="saveUser()" class="btn" style="width:100%;">Save Info</button>
+    </div>
+
+    <div id="cart-container">
+        <h2 style="color:pink; font-size:2.2rem; margin-bottom:1rem;">Your Cart</h2>
+        <ul id="cart-items"></ul>
+        <p style="color:#fff; font-size:1.8rem; margin-top:1.5rem;">Total: $<span id="cart-total">0.00</span></p>
+        <a href="#contact" class="btn" style="width:100%; text-align:center; margin-top:1rem;">Proceed to Checkout</a>
+    </div>
+
+    <section class="home" id="home">
+        <div class="swiper home-slider">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide box" style="background: url(images/wallpaperflare.com_wallpaper\ \(1\).jpg);">
+                    <div class="content">
+                        <h3>fresh flowers</h3>
+                        <p>special discount</p>
+                        <div class="button"><a href="#products" class="btn">shop now</a></div>
+                    </div>
+                </div>
+                <div class="swiper-slide box" style="background: url(images/wallpaperflare.com_wallpaper\ \(6\).jpg);">
+                    <div class="content">
+                        <h3>up to 30% off</h3>
+                        <p>on all customers</p>
+                        <div class="button"><a href="#products" class="btn">shop now</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </section>
+
+    <section class="products" id="products">
+        <h1 class="heading">our <span>products</span></h1>
+        <div class="swiper products-slider" data-aos="zoom-in">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide box product-item" data-name="red rose">
+                    <div class="icons">
+                        <a href="javascript:void(0)" class="fas fa-shopping-cart add-to-cart" data-name="Red Rose" data-price="79.99"></a>
+                        <a href="#" class="fas fa-eye"></a>
+                        <a href="#" class="fas fa-share"></a>
+                    </div>
+                    <div class="image"><img src="images/dong-cheng-krEjviclb4E-unsplash.jpg" alt=""></div>
+                    <div class="content">
+                        <h3>Red Rose</h3>
+                        <div class="price"> $79.99 <span>$95.99</span></div>
+                        <button class="buynow"><a href="#contact">Buy Now</a></button>
+                    </div>
+                </div>
+
+                <div class="swiper-slide box product-item" data-name="white lily">
+                    <div class="icons">
+                        <a href="javascript:void(0)" class="fas fa-shopping-cart add-to-cart" data-name="White Lily" data-price="55.00"></a>
+                        <a href="#" class="fas fa-eye"></a>
+                        <a href="#" class="fas fa-share"></a>
+                    </div>
+                    <div class="image"><img src="images/christie-kim-0IsBu45B3T8-unsplash.jpg" alt=""></div>
+                    <div class="content">
+                        <h3>White Lily</h3>
+                        <div class="price"> $55.00 <span>$65.00</span></div>
+                        <button class="buynow"><a href="#contact">Buy Now</a></button>
+                    </div>
+                </div>
+                
+                <div class="swiper-slide box product-item" data-name="pink tulip">
+                    <div class="icons">
+                        <a href="javascript:void(0)" class="fas fa-shopping-cart add-to-cart" data-name="Pink Tulip" data-price="89.99"></a>
+                        <a href="#" class="fas fa-eye"></a>
+                        <a href="#" class="fas fa-share"></a>
+                    </div>
+                    <div class="image"><img src="images/larisa-birta-O2vLFt6JTsk-unsplash.jpg" alt=""></div>
+                    <div class="content">
+                        <h3>Pink Tulip</h3>
+                        <div class="price"> $89.99 <span>$110.00</span></div>
+                        <button class="buynow"><a href="#contact">Buy Now</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="content" data-aos="fade-right">
+            <h3>about <span style="color: #fff;">us</span></h3>
+            <p>For the best and freshest flowers in Winter Garden, Ventinove has exactly what you’re looking for! Check out our wide selection of flower arrangements to make your next occasion memorable.</p>
+            <a href="#" class="btn">read more</a>
+        </div>
+    </section>
+
+    <section class="arrivals" id="arrivals">
+        <h1 class="heading">new <span>arrivals</span></h1>
+        <div class="box-container">
+            <div class="box product-item" data-name="marcella" data-aos="fade-right">
+                <div class="icons">
+                    <a href="javascript:void(0)" class="fas fa-shopping-cart add-to-cart" data-name="Marcella Flower" data-price="79.99"></a>
+                    <a href="#" class="fas fa-eye"></a>
+                    <a href="#" class="fas fa-share"></a>
+                </div>
+                <div class="image"><img src="images/marcella-marcella-hn6CC9aosEk-unsplash.jpg" alt=""></div>
+                <div class="content">
+                    <h3>Latest products</h3>
+                    <div class="price"> $79.99 <span>$95.99</span></div>
+                </div>
+            </div>
+            <div class="box product-item" data-name="sunflower" data-aos="fade-down">
+                <div class="icons">
+                    <a href="javascript:void(0)" class="fas fa-shopping-cart add-to-cart" data-name="Sunflower" data-price="45.99"></a>
+                    <a href="#" class="fas fa-eye"></a>
+                    <a href="#" class="fas fa-share"></a>
+                </div>
+                <div class="image"><img src="images/flowers-gb4eaa0abe_640.jpg" alt=""></div>
+                <div class="content">
+                    <h3>Latest products</h3>
+                    <div class="price"> $45.99 <span>$95.99</span></div>
+                </div>
+            </div>
+            <div class="box product-item" data-name="wedding bouquet" data-aos="fade-left">
+                <div class="icons">
+                    <a href="javascript:void(0)" class="fas fa-shopping-cart add-to-cart" data-name="Wedding Bouquet" data-price="120.00"></a>
+                    <a href="#" class="fas fa-eye"></a>
+                    <a href="#" class="fas fa-share"></a>
+                </div>
+                <div class="image"><img src="images/wedding-g085eb003a_1280.jpg" alt=""></div>
+                <div class="content">
+                    <h3>Latest products</h3>
+                    <div class="price"> $120.00 <span>$150.99</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <h1 class="heading">contact <span>us</span></h1>
+        <div class="row">
+            <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28998.44782404763!2d84.96768638928934!3d24.699195573953965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f32c5fbc12ed3d%3A0x9bbc5dccc57d96e!2sBodh%20Gaya%2C%20Bihar!5e0!3m2!1sen!2sin!4v1641306084761!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+            <form id="order-form">
+                <h3 data-aos="zoom-in">Place Your Order's !</h3>
+                <input id="form-name" type="text" placeholder="Your name" class="box" required>
+                <input type="email" placeholder="Your email" class="box" required>
+                <input id="form-phone" type="Number" placeholder="Your number" class="box" required>
+                <textarea id="form-address" placeholder="your address" class="box" cols="30" rows="10" required></textarea>
+                <input type="submit" value="Order Now !" class="btn">
+            </form>
+        </div>
+    </section>
+
+    <section class="blogs" id="blogs">
+        <h1 class="heading">our <span>blogs</span></h1>
+        <div class="box-container">
+            <div class="box" data-aos="fade-right">
+                <div class="image"><img src="images/couple-g5755969e7_640.jpg" alt=""></div>
+                <div class="content">
+                    <h3>Believe in the Magic of Flowers.</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, tempore.</p>
+                    <a href="#" class="btn">read more</a>
+                </div>
+            </div>
+            <div class="box" data-aos="fade-down">
+                <div class="image"><img src="images/woman-g0973c91b0_640.jpg" alt=""></div>
+                <div class="content">
+                    <h3>Believe in the Magic of Flowers.</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, tempore.</p>
+                    <a href="#" class="btn">read more</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="footer" id="footer">
+        <div class="box-container">
+            <div class="box" data-aos="fade-right">
+                <h3>our branches</h3>
+                <a href="#"><i class="fas fa-map-marker-alt"></i>India</a>
+                <a href="#"><i class="fas fa-map-marker-alt"></i>USA</a>
+            </div>
+            <div class="box" data-aos="fade-down">
+                <h3>Quick links</h3>
+                <a href="#home">Home</a>
+                <a href="#products">Products</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="box" data-aos="fade-left">
+                <h3>Social links</h3>
+                <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+            </div>
+        </div>
+        <div class="credit"> all rights reserved</div>
+    </section>
+
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script src="FlowerSrcipt.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>AOS.init();</script>
+</body>
+</html>
